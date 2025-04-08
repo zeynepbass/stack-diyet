@@ -75,34 +75,34 @@ const useStore = create((set) => ({
         try {
             // Get user from localStorage
             const user = JSON.parse(localStorage.getItem('user')) || null;
-    
+
             // Check if user exists
             if (!user) {
                 console.error('No user found');
                 return;
             }
-    
+
             // Get usersData from the store state
             set((state) => {
                 const usersData = state?.usersData;
-    
+
                 // Ensure usersData is populated and find the user with matching email
                 const userMatch = usersData?.find((item) => item.email === user.result.email);
-    
+
                 if (!userMatch) {
                     console.error('User not found in usersData');
                     return;
                 }
-    
+
                 // Fetch the nickname (use the correct field name, assuming it's firstName)
                 const nickName = userMatch.nickName || userMatch.firstName;
-    
+
                 // Create the new post object with the formData and the user's nickname
                 const newPost = {
                     ...formData,    // Include formData fields
                     nickName: nickName, // Add nickname from the user
                 };
-    
+
                 // Now, send newPost to the API
                 axios.post('http://localhost:6078/panel', newPost)
                     .then((response) => {
@@ -110,7 +110,7 @@ const useStore = create((set) => ({
                         set((state) => {
                             // Make sure filteredData is initialized properly if it's undefined
                             const updatedFilteredData = state?.data ? [...state.data, response.data] : [response.data];
-    
+
                             // Return the updated state with filteredData
                             return {
                                 filteredData: updatedFilteredData,
@@ -121,12 +121,12 @@ const useStore = create((set) => ({
                         console.error('Error submitting comment:', error);
                     });
             });
-    
+
         } catch (error) {
             console.error('Error submitting comment:', error);
         }
     },
-    
+
     fetchRegister: async (formData) => {
 
         try {
