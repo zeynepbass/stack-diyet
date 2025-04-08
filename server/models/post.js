@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 const post=new mongoose.Schema({
 
- 
+  nickName:{type:String},
     baslik:{type:String, required:true},
   
   acikla:{type:String,required:true},

@@ -14,10 +14,10 @@ const Footer = () => { // Changed footer to Footer
 
             <div className="w-full h-[400px] bg-purple-50 rounded-xl  border-2 border-purple-100 p-4">
                 {/* Here you can map over `top5Posts` to display the posts */}
-                {top5Posts.map((post) => (
-                    <div key={post.id} className="post-card">
-                        <span>{post.baslik}</span>
-                      &nbsp;   <span style={{color:"red"}}>{post.likeCount} Beğeni</span>
+                {top5Posts.map((post,index) => (
+                    <div key={index} className="post-card">
+                        <strong><span >{post.baslik.slice(0,20)}</span></strong>
+                      &nbsp;<span className='text-gray-400'>{post.likeCount} Beğeni</span>
                     </div>
                 ))}
             </div>
