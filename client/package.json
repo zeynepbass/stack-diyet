@@ -1,6 +1,6 @@
 {
   "name": "stackowerflow",
-  "proxy": "http://localhost:6078",
+  "proxy": "https://stack-diyet.onrender.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

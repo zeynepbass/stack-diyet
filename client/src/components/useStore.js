@@ -12,7 +12,7 @@ const useStore = create((set) => ({
     // Fetch data from API
     fetchPost: async () => {
         try {
-            const response = await axios.get('http://localhost:6078/panel');
+            const response = await axios.get('https://stack-diyet.onrender.com/panel');
             const fetchedData = response.data;
 
             // Get the current search term from state and filter the fetched data
@@ -49,7 +49,7 @@ const useStore = create((set) => ({
 
     fetchUsers: async () => {
         try {
-            const response = await axios.get(`http://localhost:6078/users`);
+            const response = await axios.get(`https://stack-diyet.onrender.com/users`);
             set({ usersData: response.data })
 
         } catch (error) {
@@ -58,7 +58,7 @@ const useStore = create((set) => ({
     },
     fetchLike: async (postId, incrementValue) => {
         try {
-            await axios.put(`http://localhost:6078/panel/like/${postId}`);
+            await axios.put(`https://stack-diyet.onrender.com/panel/like/${postId}`);
             set((state) => {
                 const updatedPosts = state.filteredData.map((post) =>
                     post._id === postId ? { ...post, likeCount: incrementValue } : post
@@ -104,7 +104,7 @@ const useStore = create((set) => ({
                 };
 
                 // Now, send newPost to the API
-                axios.post('http://localhost:6078/panel', newPost)
+                axios.post('https://stack-diyet.onrender.com/panel', newPost)
                     .then((response) => {
                         // Update filteredData with the new post, making sure filteredData is defined
                         set((state) => {
@@ -130,7 +130,7 @@ const useStore = create((set) => ({
     fetchRegister: async (formData) => {
 
         try {
-            const response = await axios.post("http://localhost:6078/uye-ol", formData); // Use POST if required by the backend
+            const response = await axios.post("https://stack-diyet.onrender.com/uye-ol", formData); // Use POST if required by the backend
 
 
             if (response) {
@@ -146,7 +146,7 @@ const useStore = create((set) => ({
     fetchLogin: async (formData) => {
 
         try {
-            const response = await axios.post("http://localhost:6078/signin", formData); // Use POST if required by the backend
+            const response = await axios.post("https://stack-diyet.onrender.com/signin", formData); // Use POST if required by the backend
             if (response) {
 
                 localStorage.setItem("user", JSON.stringify(response.data));
@@ -176,7 +176,7 @@ const useStore = create((set) => ({
 
             console.log(formDataWithEmail); // Kontrol amacıyla
 
-            const response = await axios.put("http://localhost:6078/sifre", formDataWithEmail);
+            const response = await axios.put("https://stack-diyet.onrender.com/sifre", formDataWithEmail);
             console.log(response);  // API'den gelen yanıtı kontrol et
 
             // API yanıtını kontrol et
