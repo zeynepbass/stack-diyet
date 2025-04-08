@@ -90,6 +90,11 @@ const Hakkında = () => {
           <p className="mt-4 text-xl text-gray-600">
             Bizimle iletişime geçmek için aşağıdaki formu doldurun ve sağlıklı yaşam yolculuğunuza başlayın.
           </p>
+          <br/>
+          {status && (
+            <p className="mt-4 text-xl text-gray-600">{status}</p>
+          )}
+          <br/>
           <form ref={formRef} onSubmit={handleSubmit} className="mt-8">
             <input
               type="text"
@@ -122,9 +127,7 @@ const Hakkında = () => {
               Gönder
             </button>
           </form>
-          {status && (
-            <p className="mt-4 text-xl text-gray-600">{status}</p>
-          )}
+      
         </div>
       </section>
       <br />
