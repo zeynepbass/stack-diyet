@@ -16,10 +16,10 @@ const Hakkında = () => {
     e.preventDefault();
     emailjs
       .sendForm(
-        process.env.servis, 
-        process.env.template, 
+        process.env.REACT_APP_SERVIS, 
+        process.env.REACT_APP_TEMPLATE, 
         formRef.current,  
-        process.env.id
+        process.env.REACT_APP_USERID
       )
       .then(
         (result) => {
@@ -127,7 +127,7 @@ const Hakkında = () => {
               Gönder
             </button>
           </form>
-      
+        
         </div>
       </section>
       <br />
