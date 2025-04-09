@@ -2,54 +2,50 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 const useStore = create((set) => ({
-    data: [],  // Store the fetched data
-    veri: [],
+    search: "", 
+    data: [], 
     usersData: [],
-    filteredData: [], // Store the filtered data
-    search: "", // Store the search term
+    filteredData: [], 
     user: JSON.parse(localStorage.getItem("user")) || null,
     firstName: JSON.parse(localStorage.getItem("firstName")),
-    // Fetch data from API
+   
     fetchPost: async () => {
         try {
-            const response = await axios.get('https://stack-diyet.onrender.com/panel');
-            const fetchedData = response.data;
-
-            // Get the current search term from state and filter the fetched data
-            set((state) => {
-                const filteredData = fetchedData.filter((item) =>
-                    item.baslik.toLowerCase().includes(state.search.toLowerCase()) // Use search from state
-                ).reverse();
-
-                return {
-                    data: fetchedData,
-                    filteredData: filteredData, // Store the filtered data
-                };
-            });
+          const response = await axios.get('/panel');
+          const fetchedData = response.data;
+    
+          set((state) => {
+            const filteredData = fetchedData.filter((item) =>
+              item.baslik.toLowerCase().includes(state.search.toLowerCase())
+            ).reverse();
+    
+            return {
+              data: fetchedData,
+              filteredData: filteredData,
+            };
+          });
         } catch (error) {
-            console.error('Error fetching data:', error);
+          console.error('Error fetching data:', error);
         }
-    },
-
-    // Update search term and filter data accordingly
+      },
     setSearch: (newSearch) => {
         set((state) => {
-            const filteredData = state.data
-                .filter((item) =>
-                    item.baslik.toLowerCase().includes(newSearch.toLowerCase()) // Filter based on new search term
-                )
-                .reverse();  // Reverse the order of the filtered data
-
-            return {
-                search: newSearch,
-                filteredData: filteredData, // Update filtered data with reversed order
-            };
+          const filteredData = state.data
+            .filter((item) =>
+              item.baslik.toLowerCase().includes(newSearch.toLowerCase())
+            )
+            .reverse();
+    
+          return {
+            search: newSearch,
+            filteredData: filteredData,
+          };
         });
-    },
+      },
 
     fetchUsers: async () => {
         try {
-            const response = await axios.get(`https://stack-diyet.onrender.com/users`);
+            const response = await axios.get(`/users`);
             set({ usersData: response.data })
 
         } catch (error) {
@@ -58,7 +54,7 @@ const useStore = create((set) => ({
     },
     fetchLike: async (postId, incrementValue) => {
         try {
-            await axios.put(`https://stack-diyet.onrender.com/panel/like/${postId}`);
+            await axios.put(`/panel/like/${postId}`);
             set((state) => {
                 const updatedPosts = state.filteredData.map((post) =>
                     post._id === postId ? { ...post, likeCount: incrementValue } : post
@@ -73,45 +69,38 @@ const useStore = create((set) => ({
     },
     fetchComment: async (formData) => {
         try {
-            // Get user from localStorage
+
             const user = JSON.parse(localStorage.getItem('user')) || null;
 
-            // Check if user exists
+            
             if (!user) {
                 console.error('No user found');
                 return;
             }
 
-            // Get usersData from the store state
-            set((state) => {
-                const usersData = state?.usersData;
 
-                // Ensure usersData is populated and find the user with matching email
-                const userMatch = usersData?.find((item) => item.email === user.result.email);
+         
+                const data = JSON.parse(localStorage.getItem("user"))
 
-                if (!userMatch) {
-                    console.error('User not found in usersData');
-                    return;
-                }
 
-                // Fetch the nickname (use the correct field name, assuming it's firstName)
-                const nickName = userMatch.nickName || userMatch.firstName;
+              
+                const nickName = data?.result?.firstName
 
-                // Create the new post object with the formData and the user's nickname
+               
                 const newPost = {
-                    ...formData,    // Include formData fields
-                    nickName: nickName, // Add nickname from the user
+                    ...formData,    
+                    nickName: nickName, 
                 };
 
-                // Now, send newPost to the API
-                axios.post('https://stack-diyet.onrender.com/panel', newPost)
+
+                axios.post('/panel', newPost)
                     .then((response) => {
-                        // Update filteredData with the new post, making sure filteredData is defined
+                       
                         set((state) => {
-                            // Make sure filteredData is initialized properly if it's undefined
+                          
                             const updatedFilteredData = state?.data ? [...state.data, response.data] : [response.data];
 
-                            // Return the updated state with filteredData
+                    
                             return {
                                 filteredData: updatedFilteredData,
                             };
@@ -120,7 +109,7 @@ const useStore = create((set) => ({
                     .catch((error) => {
                         console.error('Error submitting comment:', error);
                     });
-            });
+     
 
         } catch (error) {
             console.error('Error submitting comment:', error);
@@ -130,12 +119,13 @@ const useStore = create((set) => ({
     fetchRegister: async (formData) => {
 
         try {
-            const response = await axios.post("https://stack-diyet.onrender.com/uye-ol", formData); // Use POST if required by the backend
+            const response = await axios.post("/uye-ol", formData); 
 
 
             if (response) {
 
                 localStorage.setItem("firstName", JSON.stringify(response.data.result.firstName));
+
             } else {
                 console.error("Response data is missing");
             }
@@ -146,10 +136,11 @@ const useStore = create((set) => ({
     fetchLogin: async (formData) => {
 
         try {
-            const response = await axios.post("https://stack-diyet.onrender.com/signin", formData); // Use POST if required by the backend
+            const response = await axios.post("/signin", formData); 
             if (response) {
 
                 localStorage.setItem("user", JSON.stringify(response.data));
+                window.location.href = ("/");
             } else {
                 console.error("Response data is missing");
             }
@@ -159,10 +150,10 @@ const useStore = create((set) => ({
     },
     fetchSifre: async (formData) => {
         try {
-            // localStorage'dan "user" bilgilerini al
+          
             const localEmail = JSON.parse(localStorage.getItem("user"));
 
-            // localEmail objesinin içinde yer alan email alanını al
+           
             const email = localEmail?.result?.email;
 
             if (!email) {
@@ -171,15 +162,13 @@ const useStore = create((set) => ({
                 return;
             }
 
-            // formData'ya email'i ekle
+          
             const formDataWithEmail = { ...formData, email };
 
-            console.log(formDataWithEmail); // Kontrol amacıyla
+            console.log(formDataWithEmail); 
 
-            const response = await axios.put("https://stack-diyet.onrender.com/sifre", formDataWithEmail);
-            console.log(response);  // API'den gelen yanıtı kontrol et
-
-            // API yanıtını kontrol et
+            const response = await axios.put("/sifre", formDataWithEmail);
+         
             if (response.data.success) {
                 console.log("Şifre güncelleme başarılı.");
 

@@ -1,9 +1,13 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
+import useStore from '../useStore';
+const Index = ({ open, setOpen }) => {
 
-const Index = ({ open, setOpen, users }) => {
+    const {usersData,fetchUsers } = useStore();
 
-
+  useEffect(() => {
+    fetchUsers();
+}, []);
     return (
         <Dialog open={open} onClose={setOpen} className="relative z-10">
             <DialogBackdrop
@@ -21,7 +25,7 @@ const Index = ({ open, setOpen, users }) => {
                             <div className="flex w-full">
 
                                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                    {users &&
+                                    {usersData &&
 
                                         <>
 
@@ -33,10 +37,10 @@ const Index = ({ open, setOpen, users }) => {
 
                                                 <ul>
                                                  
-                                                        {users && users.map((user, index) => (
+                                                        {usersData && usersData.map((user, index) => (
                                                             <strong>
                                                                 <li className="size-13" key={index}>@{user.firstName} {user.lastName}</li>
-                                                            </strong> // Replace 'name' with the appropriate field
+                                                            </strong>
                                                         )) }
 
                                                 </ul>

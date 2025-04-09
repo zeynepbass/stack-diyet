@@ -1,19 +1,19 @@
 import React from 'react'
 import useStore from "../../components/useStore"
 
-const Footer = () => { // Changed footer to Footer
+const Footer = () => { 
     const { filteredData } = useStore();
 
     const top5Posts = filteredData
-        .filter((item) => item.likeCount) // Filter posts where likeCount exists
-        .sort((a, b) => b.likeCount - a.likeCount) // Sort by likeCount in descending order
-        .slice(0, 5);
+        .filter((item) => item.likeCount)
+        .sort((a, b) => b.likeCount - a.likeCount) 
+        .slice(0, 10);
 
     return (
         <div className="grid grid-cols-1 gap-4 ">
 
-            <div className="w-full h-[400px] bg-purple-50 rounded-xl  border-2 border-purple-100 p-4">
-                {/* Here you can map over `top5Posts` to display the posts */}
+            <div className="w-full h-[250px] bg-purple-50 rounded-xl  border-2 border-purple-100 p-4">
+
                 {top5Posts.map((post,index) => (
                     <div key={index} className="post-card">
                         <strong><span >{post.baslik.slice(0,20)}</span></strong>
@@ -37,4 +37,4 @@ const Footer = () => { // Changed footer to Footer
     )
 }
 
-export default Footer; // Make sure to export Footer with an uppercase "F"
+export default Footer;

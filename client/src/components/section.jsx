@@ -1,67 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import useStore from "./useStore";
-import { useNavigate } from 'react-router-dom';
+import Form from "../components/Form/index"
+import axios from "axios";
 
 const Section = () => {
-  const { filteredData, fetchPost, fetchLike, fetchComment } = useStore();
+  const { filteredData, fetchPost, fetchLike } = useStore();
   const user = JSON.parse(localStorage.getItem("user"));
-  const navigate = useNavigate();
-  
-  const [formData, setFormData] = useState({
-    baslik: "",
-    acikla: ""
-  });
-
-  const [isCommentVisible, setIsCommentVisible] = useState(false);
   const [open, setOpen] = useState(false);
+  const [commentVisible, setCommentVisible] = useState({});
+  const [yorum, setyorum] = useState('');
 
-  const handleCommentClick = () => {
-    setIsCommentVisible(!isCommentVisible);
-  };
 
-  const handleClick = (postId, currentLikeCount) => {
-    if (user) {
-      const incrementedLikeCount = currentLikeCount + 1;
-      fetchLike(postId, incrementedLikeCount);
-    } else {
-      navigate("/giris-yap");
+  const commentHandler = async (postId) => {
+    if (!yorum.trim()) return;
+
+    try {
+      await axios.post(`/detay/${postId}`, { yorum: yorum });
+      setyorum('');
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
+  const handleCommentClick = (id) => {
+    setCommentVisible((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();  // Prevent the default form submission
-
-    // Ensure 'user' is logged in before proceeding
-    if (user) {
-      // Use formData directly without re-declaring it
-      const dataToSend = {
-        acikla: formData.acikla,
-        baslik: formData.baslik,
-      };
-
-      // Call fetchComment with the dataToSend to submit the post/comment
-      await fetchComment(dataToSend);
-
-      // Clear the form after submission
-      setFormData({ acikla: "", baslik: "" });
-    } else {
-      navigate("/giris-yap"); // Redirect to login page if user is not logged in
-    }
+  const handleClick = (postId, currentLikeCount) => {
+    const incrementedLikeCount = currentLikeCount + 1;
+    fetchLike(postId, incrementedLikeCount);
   };
 
   useEffect(() => {
-
     fetchPost();
-  }, [fetchPost]);
+  }, []);
 
   return (
     <div>
@@ -99,49 +75,13 @@ const Section = () => {
         <h4 className="font-semibold text-slate-800">En iyi diyet listesi</h4>
       </p>
       <br />
+      {user ? <Form /> : null}
 
-      <form className="w-full flex space-x-4 h-10" onSubmit={handleSubmit}> {/* Form now uses onSubmit */}
-      <div className="relative w-full row">
-  <input
-    type="text"
-    name="baslik"
-    value={formData.baslik}
-    onChange={handleChange}
-    className="h-10 block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-    placeholder="Başlık yaz..."
-    required
-  />
-  
-  <textarea   type="text"
-    name="acikla"
-    value={formData.acikla}
-    onChange={handleChange}
-    className="h-50 block w-full p-1 mt-1 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-    placeholder="Açıklama yaz..."
-    required>
-
-  </textarea>
-  
-  <button
-          type="submit"
-          className="float-right mt-1 w-auto p-2 bg-purple-700 text-white rounded-lg hover:bg-purple-100 focus:ring-2 focus:ring-purple-300"
-        >
-          Gönder
-        </button>
-</div>
-
-     
-      </form>
-
-      <br />
-      <br />
-      <br />
-
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-4" style={{ paddingTop: user ? "10%" : "0" }}>
         <div className="w-full p-4 h-[50vh] overflow-y-auto">
-          {filteredData && filteredData.map((item,index) => (
+          {filteredData && filteredData.map((item, index) => (
             <div key={index} className="mt-2 text-gray-900">
-              <h4><span className="font-semibold text-lg">Yayınlayan:</span> {item.nickName ? item.nickName : "" }</h4>
+              <h4><span className="font-semibold text-lg">Yayınlayan:</span> {item.nickName ? item.nickName : "..."}</h4>
               <p className="mt-1 text-sm text-gray-700">{item.baslik}</p>
               <p className="mt-1 text-sm text-gray-700">{item.acikla}</p>
               <div className="flex items-center mt-2 space-x-4">
@@ -154,27 +94,47 @@ const Section = () => {
                 <span className="text-sm text-gray-500">{item.likeCount} Beğeni</span>
                 <span>
                   <button
-                    onClick={handleCommentClick}
+                    onClick={() => handleCommentClick(item._id)}
                     className="text-gray-500 hover:text-gray-700"
                   >
                     Yorum Yap
                   </button>
                 </span>
+
+
               </div>
+
+
+              <div className={`mt-4 flex items-center space-x-2 relative overflow-y-auto ${item.comments.length > 0 ? 'h-20' : 'h-0'}`}>
+                <ul className="mt-2 text-sm text-gray-500 ml-10 " >
+                  {item.comments && item.comments.map((comment, index) => (
+                    <>
+                      <li key={index}> <strong>{item.nickName}</strong>: {comment}</li><br />
+                    </>
+
+
+
+                  ))}
+                </ul>
+              </div>
+              {commentVisible[item._id] && (
+                <div className="mt-4 flex items-center space-x-2 relative">
+                  <textarea
+                    value={yorum}
+                    onChange={(e) => setyorum(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded-lg text-sm"
+                    placeholder="Yorumunuzu yazın..."
+                  />
+                  <button
+                    className="absolute top-2 right-2 bg-gray-800 text-white px-4 py-2 rounded-lg"
+                    onClick={() => commentHandler(item._id)} 
+                  >
+                    Gönder
+                  </button>
+                </div>
+              )}
             </div>
           ))}
-          {/* Comment Section */}
-          {isCommentVisible && (
-            <div className="mt-4 flex items-center space-x-2 relative">
-              <textarea
-                className="w-full p-2 border border-gray-300 rounded-lg text-sm"
-                placeholder="Yorumunuzu yazın..."
-              />
-              <button className="absolute top-2 right-2 bg-gray-800 text-white px-4 py-2 rounded-lg">
-                Gönder
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
