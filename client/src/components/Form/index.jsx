@@ -41,7 +41,7 @@ const Index = () => {
       await fetchComment(dataToSend);
       setFormData({ acikla: "", baslik: "" });
     } else {
-      navigate("/giris-yap");
+      navigate("/ana-sayfa");
     }
   };
 

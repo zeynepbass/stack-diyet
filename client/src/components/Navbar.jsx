@@ -4,8 +4,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import useStore from './useStore';
 
 const Navbar = () => {
- const {search,setSearch}=useStore()
+  const { search, setSearch } = useStore()
   const user = JSON.parse(localStorage.getItem("user"));
+  const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   const navigation = useNavigate();
   const handleLogOut = () => {
     localStorage.clear();
@@ -15,7 +16,7 @@ const Navbar = () => {
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-           
+
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
@@ -35,12 +36,12 @@ const Navbar = () => {
 
             <div className="hidden sm:ml-6 sm:block w-full">
               <div className="flex space-x-4">
-                <a
+                <Link to="/hakkinda"
                   aria-current="page"
                   className="text-gray-800"
                 >
                   Hakkında
-                </a>
+                </Link>
 
 
                 <div className="relative w-full">
@@ -50,15 +51,15 @@ const Navbar = () => {
                     </svg>
                   </div>
                   <input
-type="search"
-name="search"
-value={search}
-onChange={(e) => setSearch(e.target.value)}
-  id="default-search"
-  className="block w-full h-4 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-  placeholder="Arama..."
-  required
-/>
+                    type="search"
+                    name="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    id="default-search"
+                    className="block w-full h-4 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Arama..."
+                    required
+                  />
 
                 </div>
 
@@ -75,7 +76,7 @@ onChange={(e) => setSearch(e.target.value)}
                     <span className="absolute -inset-1.5" />
                     <img
                       alt=""
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src={userProfile?.selectedFile}
                       className="size-8 rounded-full"
                     />
                   </MenuButton>
@@ -94,17 +95,17 @@ onChange={(e) => setSearch(e.target.value)}
                     </a>
                   </MenuItem>
                   <MenuItem
-                    
+
                   >
-                   <Link className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-                    onClick={handleLogOut}>
+                    <Link className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                      onClick={handleLogOut}>
                       Çıkış Yap
-                   </Link> 
+                    </Link>
                   </MenuItem>
 
                 </MenuItems>
               </Menu> :
-              <button className="rounded-full" onClick={() => navigation("/giris-yap")}>Giriş Yap</button>
+              <button className="rounded-full" onClick={() => navigation("/")}>Giriş Yap</button>
             }
           </div>
         </div>

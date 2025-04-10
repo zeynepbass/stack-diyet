@@ -29,15 +29,13 @@ const LoginForm = () => {
       return;
     }
 
-    // Call the function to update the password
     fetchSifre(formData);
 
     setErrorMessage("Başarılı yönlendiriliyorsunuz :)");
     setTimeout(() => {
-      navigate("/giris-yap");
+      navigate("/");
     }, 2000);
 
-    // Clear the error message after the timeout
     setErrorMessage('');
   };
 

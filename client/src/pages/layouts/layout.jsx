@@ -16,7 +16,7 @@ const Layout = ({ content }) => {
           <div className="col-span-1 md:col-span-6 p-4">
           {content && content}
           </div>
-          <div className="col-span-1 md:col-span-4  p-4">
+          <div className="col-span-1 md:col-span-4 p-5">
             <h4 className="font-semibold text-slate-700">Öne Çıkanlar</h4>
 
         

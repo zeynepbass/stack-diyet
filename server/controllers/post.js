@@ -53,15 +53,25 @@ const Delete=async (req,res)=>{
         res.status(404).json({message:error.message})
     }
 }
-const duzenle=async(req,res)=>{
-    const {id:_id}=req.params;
-    const post=req.body;
-    if(!mongoose.Types.ObjectId.isValid(_id)) res.status(404).send("post bulunamadı")
+const duzenle = async (req, res) => {
+    const { id: email } = req.params;
+    const { selectedFile } = req.body;
   
-    const guncelPost=await Post.findByIdAndUpdate(_id,post,{new:true});
-    res.status(200).json(guncelPost)
-}
-
+    try {
+      const updated = await Post.findOneAndUpdate(
+        { email }, 
+        { selectedFile },
+        { new: true }
+      );
+  
+      if (!updated) return res.status(404).json({ message: "Kullanıcı bulunamadı" });
+      res.status(200).json(updated);
+    } catch (error) {
+      res.status(500).json({ message: "Sunucu hatası", error });
+    }
+  };
+  
+  
 const commentPost= async(req,res)=>{
     const {id}=req.params;
     const {yorum}=req.body;

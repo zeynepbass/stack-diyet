@@ -140,7 +140,7 @@ const useStore = create((set) => ({
             if (response) {
 
                 localStorage.setItem("user", JSON.stringify(response.data));
-                window.location.href = ("/");
+                window.location.href = ("/ana-sayfa");
             } else {
                 console.error("Response data is missing");
             }

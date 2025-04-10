@@ -53,7 +53,7 @@ const Hakkında = () => {
             Burada, diyetle ilgili tüm soruları sorabilir, deneyimlerinizi paylaşabilir ve toplulukla etkileşime geçebilirsiniz.
           </p>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/ana-sayfa")}
             className="mt-6 bg-purple-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-purple-700 transition"
           >
             Soru Sor

@@ -11,7 +11,7 @@ const LoginForm = () => {
     firstName: "",
     lastName: "",
     password: "",
-    confirmPassword: ""  // confirmPassword dahil
+    confirmPassword: "" 
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -19,26 +19,26 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Kontroller
+   
     if (!formData.email || !formData.password || !formData.firstName || !formData.lastName || !formData.confirmPassword) {
       setErrorMessage('Lütfen tüm alanları doldurun.');
-      return; // Return early if any required field is empty
+      return; 
     }
 
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage('Şifreler uyusmuyor.');
-      return; // Return early if passwords do not match
+      return; 
     }
 
 
-await fetchRegister(formData);  // Kopyayı gönder
+await fetchRegister(formData);  
 
 
 
     
       setErrorMessage("Başarılı yönlendiriliyorsunuz :)");
       setTimeout(() => {
-        navigate("/giris-yap");
+        navigate("/");
       }, 2000); 
     
     setErrorMessage('');
@@ -65,7 +65,7 @@ await fetchRegister(formData);  // Kopyayı gönder
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6 mt-4">
-          {/* Email Input */}
+        
           <div>
             <label className="block text-sm font-medium text-gray-700">
               İsim
@@ -109,7 +109,7 @@ await fetchRegister(formData);  // Kopyayı gönder
             />
           </div>
 
-          {/* Password Input */}
+
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Parola
@@ -139,7 +139,7 @@ await fetchRegister(formData);  // Kopyayı gönder
             />
           </div>
 
-          {/* Submit Button */}
+        
           <div>
             <button
               type="submit"
@@ -153,7 +153,7 @@ await fetchRegister(formData);  // Kopyayı gönder
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Hesabınız var mı?{' '}
-            <Link to="/giris-yap" className="text-purple-600 hover:text-purple-500">
+            <Link to="/" className="text-purple-600 hover:text-purple-500">
               Giriş Yap
             </Link>
           </p>

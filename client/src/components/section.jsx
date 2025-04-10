@@ -7,6 +7,7 @@ import axios from "axios";
 const Section = () => {
   const { filteredData, fetchPost, fetchLike } = useStore();
   const user = JSON.parse(localStorage.getItem("user"));
+  const userProfile = JSON.parse(localStorage.getItem("userProfile"));
   const [open, setOpen] = useState(false);
   const [commentVisible, setCommentVisible] = useState({});
   const [yorum, setyorum] = useState('');
@@ -77,10 +78,10 @@ const Section = () => {
       <br />
       {user ? <Form /> : null}
 
-      <div className="grid grid-cols-1 gap-4" style={{ paddingTop: user ? "10%" : "0" }}>
-        <div className="w-full p-4 h-[50vh] overflow-y-auto">
+      <div className="grid grid-cols-1 " style={{ paddingTop: user ? "10%" : "0" }}> 
+        <div className="w-full p-1 h-[100vh] overflow-y-auto">
           {filteredData && filteredData.map((item, index) => (
-            <div key={index} className="mt-2 text-gray-900">
+            <div key={index} className="mt-2 text-gray-900 bg-gray-100 p-4 rounded-lg">
               <h4><span className="font-semibold text-lg">Yayınlayan:</span> {item.nickName ? item.nickName : "..."}</h4>
               <p className="mt-1 text-sm text-gray-700">{item.baslik}</p>
               <p className="mt-1 text-sm text-gray-700">{item.acikla}</p>
@@ -109,7 +110,7 @@ const Section = () => {
                 <ul className="mt-2 text-sm text-gray-500 ml-10 " >
                   {item.comments && item.comments.map((comment, index) => (
                     <>
-                      <li key={index}> <strong>{item.nickName}</strong>: {comment}</li><br />
+                      <li key={index}> <strong>@{item.nickName}</strong>: {comment}</li><br />
                     </>
 
 

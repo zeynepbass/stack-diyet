@@ -2,7 +2,7 @@ import React from 'react'
 import Nav from "../../components/Navbar"
 const HeaderTop = () => {
   return (
-   <Nav/>
+   <Nav />
   )
 }
 

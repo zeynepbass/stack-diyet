@@ -16,24 +16,6 @@ app.use(cors());
 app.use('/', userRoutes);
 app.use('/', post);
 
-// const startServer = async () => {
-  
-//   try {
-//     // MongoDB bağlantısını kur
-//     await Baglan();
-
-//     // Express uygulamasını dinle
-//     const PORT = process.env.PORT || 9363;
-    
-
-//     app.listen(PORT, () => console.log(`Server ${PORT} üzerinden yayında`));
-//   } 
-  
-//   catch (error) {
-//     console.error('Server başlatma hatası:', error);
-//     process.exit(1);
-//   }
-// };
 app.listen(process.env.PORT, () => {
   mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
