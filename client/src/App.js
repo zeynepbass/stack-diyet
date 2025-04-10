@@ -13,9 +13,10 @@ function App() {
   return (
     <>
       <Routes>
+      <Route path="/hakkinda" element={<Hakkinda />}></Route>
         {user ?  
          <>
-          <Route path="/hakkinda" element={<Hakkinda />}></Route>
+
          
          <Route path="/ana-sayfa" element={<Layouts content={<Section />} />}></Route>
          <Route path="/profile/:userId" element={<ProfilePage />}></Route> 
