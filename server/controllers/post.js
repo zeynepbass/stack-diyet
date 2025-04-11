@@ -54,12 +54,12 @@ const Delete=async (req,res)=>{
     }
 }
 const duzenle = async (req, res) => {
-    const { id: email } = req.params;
+    const { id } = req.params;
     const { selectedFile } = req.body;
   
     try {
       const updated = await Post.findOneAndUpdate(
-        { email }, 
+        { id }, 
         { selectedFile },
         { new: true }
       );
@@ -71,20 +71,18 @@ const duzenle = async (req, res) => {
     }
   };
   
+  const commentPost = async (req, res) => {
+    const { id } = req.params;
+    const { text, author } = req.body;
   
-const commentPost= async(req,res)=>{
-    const {id}=req.params;
-    const {yorum}=req.body;
-
-    const post=await Post.findById(id);
-
-    post.comments.push(yorum);
-
-    const updatedPost=await Post.findByIdAndUpdate(id,post,{new:true});
-
+    const post = await Post.findById(id);
+  
+    post.comments.push({ text: text, author });
+  
+    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
+  
     res.json(updatedPost);
-
-}
+  };
 const likePost = async (req, res) => {
     const { id } = req.params;  
     if (!mongoose.Types.ObjectId.isValid(id)) {

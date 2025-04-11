@@ -1,15 +1,14 @@
 import React, { useState, useRef } from "react";
 import emailjs from "emailjs-com";
 import { useNavigate } from "react-router-dom";
-
 const Hakkında = () => {
+  const navigate=useNavigate()
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
-  
-  const formRef = useRef(); // Form referansı
-  const navigate = useNavigate();
+
+  const formRef = useRef(); 
   const fullyear = new Date().getFullYear();
 
   const handleSubmit = (e) => {
@@ -36,15 +35,13 @@ const Hakkında = () => {
 
   return (
     <div>
-      {/* Header Bölümü */}
-      <header className="bg-purple-600 text-white p-8">
+      <header className="bg-blue-900 text-white p-8">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold">Sağlıklı Yaşam İçin Sende Öneri Al</h1>
           <p className="mt-4 text-xl">Sağlıklı bir yaşam için adım atın!</p>
         </div>
       </header>
 
-      {/* Tanıtım Bölümü */}
       <section id="about" className="py-16 bg-white">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-gray-800">Biz Kimiz?</h2>
@@ -54,14 +51,15 @@ const Hakkında = () => {
           </p>
           <button
             onClick={() => navigate("/ana-sayfa")}
-            className="mt-6 bg-purple-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-purple-700 transition"
+            className="mt-6 bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition"
           >
             Soru Sor
           </button>
         </div>
       </section>
 
-      {/* Özellikler Bölümü */}
+     
+     
       <section id="features" className="py-16 bg-gray-200">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-gray-800">TOPLULUĞUMUZ</h2>
@@ -82,7 +80,6 @@ const Hakkında = () => {
         </div>
       </section>
 
-      {/* İletişim Bölümü */}
       <br />
       <section id="contact" className="bg-white">
         <div className="container mx-auto w-1/2 text-center">
@@ -100,7 +97,7 @@ const Hakkında = () => {
               type="text"
               className="border p-2 rounded-lg w-full max-sm-md mb-4"
               placeholder="Adınız"
-              name="name"  // Form data içinde hangi verinin geldiğini belirtiyoruz
+              name="name" 
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -108,21 +105,21 @@ const Hakkında = () => {
               type="email"
               className="border p-2 rounded-lg w-full max-sm-md mb-4"
               placeholder="E-posta"
-              name="email" // Aynı şekilde email alanını da belirtiyoruz
+              name="email" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <textarea
               className="border p-2 rounded-lg w-full max-sm-md mb-4"
               placeholder="Mesajınız"
-              name="message"  // Mesaj alanı da name özelliği ile formda belirtilmeli
+              name="message"  
               rows="4"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             ></textarea>
             <button
               type="submit"
-              className="bg-purple-600 text-white py-2 px-6 rounded-lg hover:bg-purple-700 transition"
+              className="bg-blue-900 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition"
             >
               Gönder
             </button>
@@ -132,8 +129,8 @@ const Hakkında = () => {
       </section>
       <br />
 
-      {/* Footer */}
-      <footer className="bg-purple-900 text-white p-4 text-center">
+    
+      <footer className="bg-blue-900 text-white p-4 text-center">
         <p>© {fullyear} Sağlıklı Yaşam Topluluğu | Tüm Hakları Saklıdır.</p>
       </footer>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import useStore from "./useStore";
 import Form from "../components/Form/index"
@@ -7,38 +7,57 @@ import axios from "axios";
 const Section = () => {
   const { filteredData, fetchPost, fetchLike } = useStore();
   const user = JSON.parse(localStorage.getItem("user"));
-  const userProfile = JSON.parse(localStorage.getItem("userProfile"));
+  const [localPosts, setLocalPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [commentVisible, setCommentVisible] = useState({});
-  const [yorum, setyorum] = useState('');
-
-
+  const [text, settext] = useState({});
   const commentHandler = async (postId) => {
-    if (!yorum.trim()) return;
+ 
+    const currenttext = text[postId];
+    if (!currenttext?.trim()) return;
 
     try {
-      await axios.post(`/detay/${postId}`, { yorum: yorum });
-      setyorum('');
+      const newComment = {
+        text: currenttext,
+        author: user?.result?.firstName
+      };
+
+      await axios.post(`/detay/${postId}`, newComment);
+      setLocalPosts(prev =>
+        prev.map(post =>
+          post._id === postId
+            ? { ...post, comments: [...post.comments, newComment] }
+            : post
+        )
+      );
+      settext(prev => ({ ...prev, [postId]: "" }));
     } catch (error) {
       console.log(error);
     }
   };
-
   const handleCommentClick = (id) => {
     setCommentVisible((prevState) => ({
       ...prevState,
       [id]: !prevState[id],
     }));
   };
-
   const handleClick = (postId, currentLikeCount) => {
     const incrementedLikeCount = currentLikeCount + 1;
     fetchLike(postId, incrementedLikeCount);
   };
 
   useEffect(() => {
-    fetchPost();
-  }, []);
+    if (JSON.stringify(filteredData) !== JSON.stringify(localPosts)) {
+      setLocalPosts(filteredData);
+    }
+  }, [filteredData]);
+  const memoizedFetchPost = useCallback(() => {
+    fetchPost(); 
+  }, [fetchPost]);
+
+  useEffect(() => {
+    memoizedFetchPost();
+  }, [memoizedFetchPost]); 
 
   return (
     <div>
@@ -78,16 +97,16 @@ const Section = () => {
       <br />
       {user ? <Form /> : null}
 
-      <div className="grid grid-cols-1 " style={{ paddingTop: user ? "10%" : "0" }}> 
+      <div className="grid grid-cols-1 " style={{ paddingTop: user ? "15%" : "0" }}>
         <div className="w-full p-1 h-[100vh] overflow-y-auto">
-          {filteredData && filteredData.map((item, index) => (
+          {localPosts && localPosts.map((item, index) => (
             <div key={index} className="mt-2 text-gray-900 bg-gray-100 p-4 rounded-lg">
               <h4><span className="font-semibold text-lg">Yayınlayan:</span> {item.nickName ? item.nickName : "..."}</h4>
               <p className="mt-1 text-sm text-gray-700">{item.baslik}</p>
               <p className="mt-1 text-sm text-gray-700">{item.acikla}</p>
               <div className="flex items-center mt-2 space-x-4">
                 <button
-                  className="text-purple-600 hover:text-purple-800"
+                  className="text-blue-600 hover:text-blue-800"
                   onClick={() => handleClick(item._id, item.likeCount)}
                 >
                   <span className="text-sm">Beğen</span>
@@ -101,34 +120,33 @@ const Section = () => {
                     Yorum Yap
                   </button>
                 </span>
-
-
               </div>
 
-
-              <div className={`mt-4 flex items-center space-x-2 relative overflow-y-auto ${item.comments.length > 0 ? 'h-20' : 'h-0'}`}>
-                <ul className="mt-2 text-sm text-gray-500 ml-10 " >
-                  {item.comments && item.comments.map((comment, index) => (
-                    <>
-                      <li key={index}> <strong>@{item.nickName}</strong>: {comment}</li><br />
-                    </>
-
-
-
-                  ))}
+              <div className={`mt-4 flex items-center space-x-2 relative overflow-y-auto ${item.comments.length > 0 ? 'h-30' : 'h-0'}`}>
+                <ul>
+                  {item?.comments?.map((comment, index) => {
+                    const isSameUser = comment.author === user?.result?.firstName;
+                    return (
+                      <li key={index}>
+                        <strong>@{isSameUser ? "Sen" : comment.author}</strong>: {comment.text}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
+
               {commentVisible[item._id] && (
                 <div className="mt-4 flex items-center space-x-2 relative">
                   <textarea
-                    value={yorum}
-                    onChange={(e) => setyorum(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded-lg text-sm"
-                    placeholder="Yorumunuzu yazın..."
+                    className='w-full rounded-lg'
+                    value={text[item._id] || ""}
+                    onChange={(e) =>
+                      settext(prev => ({ ...prev, [item._id]: e.target.value }))
+                    }
                   />
                   <button
-                    className="absolute top-2 right-2 bg-gray-800 text-white px-4 py-2 rounded-lg"
-                    onClick={() => commentHandler(item._id)} 
+                    className="absolute top-1 right-2 bg-gray-800 text-white px-4 py-2 rounded-lg"
+                    onClick={() => commentHandler(item._id)}
                   >
                     Gönder
                   </button>

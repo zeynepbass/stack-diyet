@@ -2,11 +2,15 @@ import React from 'react'
 import Header from "./header"
 import Footer from "./footer"
 import HeaderTop from "./HeaderTop"
-
+import { Navigate } from 'react-router-dom';
 const Layout = ({ content }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
 
+  if (!user) {
+    return <Navigate to="/giris-yap" replace />;
+  }
   return (
-    <div className="container mx-auto px-4" >
+    <div className="container-fluid mx-auto px-4" >
       <div className="bg-white p-2">
         <HeaderTop />
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">

@@ -4,8 +4,7 @@ import useStore from "../components/useStore";
 
 const LoginForm = () => {
   const { fetchRegister } = useStore();
-  const navigate = useNavigate();
-  
+  const Navigate=useNavigate()
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -38,8 +37,8 @@ await fetchRegister(formData);
     
       setErrorMessage("Başarılı yönlendiriliyorsunuz :)");
       setTimeout(() => {
-        navigate("/");
-      }, 2000); 
+        Navigate("/giris-yap");
+      }, 1000); 
     
     setErrorMessage('');
   };
@@ -55,7 +54,7 @@ await fetchRegister(formData);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center text-purple-800">Kayıt Ol</h2>
+        <h2 className="text-2xl font-semibold text-center text-blue-800">Kayıt Ol</h2>
 
         {/* Error Message */}
         {errorMessage && (
@@ -143,7 +142,7 @@ await fetchRegister(formData);
           <div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Kayıt Ol
             </button>
@@ -153,7 +152,7 @@ await fetchRegister(formData);
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Hesabınız var mı?{' '}
-            <Link to="/" className="text-purple-600 hover:text-purple-500">
+            <Link to="/giris-yap" className="text-blue-600 hover:text-blue-500">
               Giriş Yap
             </Link>
           </p>

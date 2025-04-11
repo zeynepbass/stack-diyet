@@ -8,7 +8,7 @@ const Index = ({ open, setOpen, data,setData }) => {
     const [base64Image, setBase64Image] = useState("");
     const { usersData, fetchUsers } = useStore();
     const user = JSON.parse(localStorage.getItem("user"));
-
+    const userVeri = usersData.filter((item) => item.email !== user?.result?.email);
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -24,7 +24,7 @@ const Index = ({ open, setOpen, data,setData }) => {
     const handleSave = async () => {
         try {
          
-            const response = await axios.put(`/duzenle/${user.result.email}`, {
+            const response = await axios.put(`/duzenle/${user.result._id}`, {
                 selectedFile: base64Image,
             });
     
@@ -90,18 +90,18 @@ const Index = ({ open, setOpen, data,setData }) => {
                                                                 <img
                                                                     src={base64Image}
                                                                     alt=""
-                                                                    className="w-40 h-40 rounded-full border-2 border-purple-500 object-cover mx-auto"
+                                                                    className="w-40 h-40 rounded-full border-2 border-blue-500 object-cover mx-auto"
                                                                 />
 
                                                                 <div className="w-full flex justify-start mt-4">
                                                                     <input
                                                                         type="file"
                                                                         onChange={handleFileChange}
-                                                                        className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+                                                                        className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                                                     />
                                                                        <button
                                                                     onClick={handleSave}
-                                                                    className="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+                                                                    className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                                                                 >
                                                                     Kaydet
                                                                 </button>
@@ -111,12 +111,17 @@ const Index = ({ open, setOpen, data,setData }) => {
                                                    
                                                     ) : (
                                                         <>
-                                                            {usersData.map((user, index) => (
-                                                                <li key={index} className="text-sm text-gray-800 cursor-pointer hover:text-purple-500">
-                                                                    <Link to={`/profile/${user._id}`}>@{user.firstName} {user.lastName}</Link>
-                                                                </li>
-                                                            ))}
-                                                        </>
+                                                        {Array.isArray(userVeri) && userVeri.length > 0 ? (
+                                                          userVeri.map((user, index) => (
+                                                            <li key={index} className="text-sm text-gray-800 cursor-pointer hover:text-blue-500">
+                                                              <Link to={`/profile/${user._id}`}>@{user.firstName} {user.lastName}</Link>
+                                                            </li>
+                                                          ))
+                                                        ) : (
+                                                          <p>No users found.</p>
+                                                        )}
+                                                      </>
+                                                      
                                                     )}
                                                 </ul>
                                             </div>

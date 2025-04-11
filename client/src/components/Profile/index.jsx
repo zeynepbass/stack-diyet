@@ -16,7 +16,7 @@ const ProfilePage = () => {
     }
     const fetchData = async () => {
         try {
-            const response = await axios.get(`/duzenle/${user.result.email}`)
+            const response = await axios.get(`/detay/${user?.result?._id}`)
             setData(response.data)
         } catch (error) {
             console.log(error)
@@ -39,7 +39,7 @@ const ProfilePage = () => {
                 <div>
                     <h1 className="text-2xl font-semibold text-gray-800">@{data.firstName}</h1>
 
-                    <p className="text-purple-600  rounded-md hover:text-purple-800" onClick={() => handleClick(user?.result?.email)}>Profil Düzenle</p>
+                    <p className="text-blue-300  rounded-md hover:text-blue-800" onClick={() => handleClick(user?.result?._id)}>Profil Düzenle</p>
 
                 </div>
             </div>

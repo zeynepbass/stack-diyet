@@ -1,14 +1,15 @@
 import { Disclosure, DisclosureButton, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useNavigate, Link } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import useStore from './useStore';
 
 const Navbar = () => {
   const { search, setSearch } = useStore()
+  const navigate=useNavigate()
   const user = JSON.parse(localStorage.getItem("user"));
   const userProfile = JSON.parse(localStorage.getItem("userProfile"));
-  const navigation = useNavigate();
   const handleLogOut = () => {
+    navigate("/giris-yap")
     localStorage.clear();
   }
   return (
@@ -36,11 +37,11 @@ const Navbar = () => {
 
             <div className="hidden sm:ml-6 sm:block w-full">
               <div className="flex space-x-4">
-                <Link to="/hakkinda"
+                <Link to="/"
                   aria-current="page"
-                  className="text-gray-800"
+                  className="text-gray-800 pt-2 font-semibold"
                 >
-                  Hakkında
+                  HAKKINDA
                 </Link>
 
 
@@ -76,7 +77,7 @@ const Navbar = () => {
                     <span className="absolute -inset-1.5" />
                     <img
                       alt=""
-                      src={userProfile?.selectedFile}
+                      src={userProfile?.selectedFile ? userProfile?.selectedFile : user.result.selectedFile}
                       className="size-8 rounded-full"
                     />
                   </MenuButton>
@@ -86,26 +87,19 @@ const Navbar = () => {
                   transition
                   className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                 >
-                  <MenuItem>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-                    >
-                      Ayarlar
-                    </a>
-                  </MenuItem>
+           
                   <MenuItem
 
                   >
-                    <Link className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                    <button className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                       onClick={handleLogOut}>
                       Çıkış Yap
-                    </Link>
+                    </button>
                   </MenuItem>
 
                 </MenuItems>
               </Menu> :
-              <button className="rounded-full" onClick={() => navigation("/")}>Giriş Yap</button>
+              <button className="rounded-full" onClick={() => navigate("/giris-yap")}>Giriş Yap</button>
             }
           </div>
         </div>

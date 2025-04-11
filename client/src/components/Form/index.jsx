@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import useStore from "../useStore";
-
+import { Navigate } from 'react-router-dom';
 const Index = () => {
   const { fetchComment } = useStore();
-  const navigate = useNavigate();
 
   
   const [user, setUser] = useState(null);
@@ -41,7 +39,7 @@ const Index = () => {
       await fetchComment(dataToSend);
       setFormData({ acikla: "", baslik: "" });
     } else {
-      navigate("/ana-sayfa");
+      Navigate("/ana-sayfa");
     }
   };
 
@@ -69,7 +67,7 @@ const Index = () => {
 
         <button
           type="submit"
-          className="float-right mt-1 w-auto p-2 bg-purple-700 text-white rounded-lg hover:bg-purple-100 focus:ring-2 focus:ring-purple-300"
+          className="float-right mt-1 w-auto p-2 bg-blue-700 text-white rounded-lg hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
         >
           Gönder
         </button>

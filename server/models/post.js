@@ -5,10 +5,13 @@ const post=new mongoose.Schema({
     baslik:{type:String, required:true},
   
   acikla:{type:String,required:true},
-   comments:{
-    type:[String],
-    default:[]
-   },
+  comments: [
+    {
+      text: { type: String },
+      author: { type: String}
+    }
+  ],
+  
    likeCount:{
     type:Number,
     default:0

@@ -7,7 +7,7 @@ router.delete('/users/:email',Delete);
 router.post('/signin',signin);
 router.post('/uye-ol',signup);
 router.post('/admin',yönetici);
-router.put('/duzenle/:email',duzenle);
-router.get('/duzenle/:email',Detay);
+router.put('/duzenle/:id',duzenle);
+router.get('/detay/:id',Detay);
 router.put('/sifre',signPassword)
 export default router;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import useStore from "../../components/useStore"
-import { useNavigate } from 'react-router-dom'
 import Dialog from "../../components/Dialog"
+import { Navigate } from 'react-router-dom'
 const Footer = () => { 
     const { filteredData } = useStore();
     const [open, setOpen] = useState(false)
@@ -12,23 +12,19 @@ const Footer = () => {
 
 
         const user = JSON.parse(localStorage.getItem("user"));
-      
-        const navigate = useNavigate()
-      
-       
         const handleClickUsers = async () => {
           if (user) {
             setOpen(!open);
           
           } else {
-            navigate('/');
+            Navigate('/');
           }
         };
       
     return (
         <div className="grid grid-cols-1 gap-4">
 
-            <div className="w-full h-[280px] bg-purple-50 rounded-xl  border-2 border-purple-100 p-4">
+            <div className="w-full h-[280px] bg-blue-50 rounded-xl  border-2 border-blue-100 p-4">
 
                 {top5Posts.map((post,index) => (
                     <div key={index} className="post-card">

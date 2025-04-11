@@ -125,7 +125,8 @@ const useStore = create((set) => ({
             if (response) {
 
                 localStorage.setItem("firstName", JSON.stringify(response.data.result.firstName));
-
+                localStorage.setItem("userRegister", JSON.stringify(response.data.result));
+                
             } else {
                 console.error("Response data is missing");
             }
@@ -148,40 +149,32 @@ const useStore = create((set) => ({
             console.error('Error submitting comment:', error);
         }
     },
-    fetchSifre: async (formData) => {
-        try {
-          
-            const localEmail = JSON.parse(localStorage.getItem("user"));
-
-           
-            const email = localEmail?.result?.email;
-
-            if (!email) {
-                console.error("Email bilgisi bulunamadı.");
-                console.log('E-posta bilgisi bulunamadı. Lütfen giriş yapın.');
-                return;
-            }
-
-          
-            const formDataWithEmail = { ...formData, email };
-
-            console.log(formDataWithEmail); 
-
-            const response = await axios.put("/sifre", formDataWithEmail);
-         
-            if (response.data.success) {
-                console.log("Şifre güncelleme başarılı.");
 
 
-            } else {
-                console.log("Şifre güncellenirken bir hata oluştu.");
-            }
+fetchSifre : async (formData) => {
+  try {
 
-        } catch (error) {
-            console.error("Hata oluştu:", error);
-            console.log("Bir hata oluştu. Lütfen tekrar deneyin.");
-        }
+
+
+    const formDataWithEmail = { ...formData };
+    console.log("Form Data:", formDataWithEmail);
+    const response = await axios.put("/sifre", formDataWithEmail);
+
+    if (response.status === 200) {
+   
+      console.log("Şifre güncelleme başarılı.");
+    } else {
+      // Hata durumunda, hata mesajı göster
+      console.log("Şifre güncellenirken bir hata oluştu:", response.data.message);
     }
+  } catch (error) {
+    console.error("Hata oluştu:", error);
+    console.log("Bir hata oluştu. Lütfen tekrar deneyin.");
+  }
+}
+
+
+
 
 }));
 
