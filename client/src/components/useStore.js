@@ -12,7 +12,7 @@ const useStore = create((set) => ({
     fetchPost: async () => {
         try {
           const response = await axios.get('/panel');
-          const fetchedData = response.data;
+          const fetchedData = [...response.data].reverse();
     
           set((state) => {
             const filteredData = fetchedData.filter((item) =>

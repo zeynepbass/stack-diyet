@@ -125,10 +125,10 @@ const Section = () => {
               <div className={`mt-4 flex items-center space-x-2 relative overflow-y-auto ${item.comments.length > 0 ? 'h-30' : 'h-0'}`}>
                 <ul>
                   {item?.comments?.map((comment, index) => {
-                    const isSameUser = comment.author === user?.result?.firstName;
+
                     return (
                       <li key={index}>
-                        <strong>@{isSameUser ? "Sen" : comment.author}</strong>: {comment.text}
+                        <strong>@{comment.author}</strong>: {comment.text}
                       </li>
                     );
                   })}
