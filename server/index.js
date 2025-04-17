@@ -5,6 +5,7 @@ import userRoutes from './routes/login.js';
 import post from './routes/post.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const app = express();

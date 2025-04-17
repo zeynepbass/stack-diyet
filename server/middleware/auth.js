@@ -12,7 +12,7 @@ const Auth = (req, res, next) => {
         next();
     } catch (error) {
         console.log(error);
-        // Handle the error as needed (send an error response, etc.)
+        
         res.status(401).json({ message: 'Authentication failed' });
     }
 };

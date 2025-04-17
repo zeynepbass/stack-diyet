@@ -7,8 +7,8 @@ const Index = () => {
   
   const [user, setUser] = useState(null);
   const [formData, setFormData] = useState({
-    baslik: "",
-    acikla: ""
+    title: "",
+    content: ""
   });
 
 
@@ -33,11 +33,12 @@ const Index = () => {
   
     if (user) {
       const dataToSend = {
-        acikla: formData.acikla,
-        baslik: formData.baslik,
+        content: formData.content,
+        title: formData.title,
+        kullanici:user?.result?.firstName
       };
       await fetchComment(dataToSend);
-      setFormData({ acikla: "", baslik: "" });
+      setFormData({ content: "", title: "" });
     } else {
       Navigate("/ana-sayfa");
     }
@@ -48,8 +49,8 @@ const Index = () => {
       <div className="relative w-full row">
         <input
           type="text"
-          name="baslik"
-          value={formData.baslik}
+          name="title"
+          value={formData.title}
           onChange={handleChange}
           className="h-10 block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Başlık yaz..."
@@ -57,8 +58,8 @@ const Index = () => {
         />
 
         <textarea
-          name="acikla"
-          value={formData.acikla}
+          name="content"
+          value={formData.content}
           onChange={handleChange}
           className="h-50 block w-full p-1 mt-1 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Açıklama yaz..."
@@ -71,6 +72,7 @@ const Index = () => {
         >
           Gönder
         </button>
+
       </div>
     </form>
   );

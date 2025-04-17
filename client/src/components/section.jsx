@@ -19,7 +19,7 @@ const Section = () => {
     try {
       const newComment = {
         text: currenttext,
-        author: user?.result?.firstName
+        author:user?.result?.firstName
       };
 
       await axios.post(`/detay/${postId}`, newComment);
@@ -60,7 +60,7 @@ const Section = () => {
   }, [memoizedFetchPost]); 
 
   return (
-    <div>
+    <div className='pt-2'>
       <Dialog open={open} onClose={setOpen} className="relative z-10">
         <DialogBackdrop
           transition
@@ -101,9 +101,9 @@ const Section = () => {
         <div className="w-full p-1 h-[100vh] overflow-y-auto">
           {localPosts && localPosts.map((item, index) => (
             <div key={index} className="mt-2 text-gray-900 bg-gray-100 p-4 rounded-lg">
-              <h4><span className="font-semibold text-lg">Yayınlayan:</span> {item.nickName ? item.nickName : "..."}</h4>
-              <p className="mt-1 text-sm text-gray-700">{item.baslik}</p>
-              <p className="mt-1 text-sm text-gray-700">{item.acikla}</p>
+              <h4><span className="font-semibold text-lg">Yayınlayan:</span> {item.kullanici ? item.kullanici : "..."}</h4>
+              <p className="mt-1 text-sm text-gray-700">{item.title}</p>
+              <p className="mt-1 text-sm text-gray-700">{item.content}</p>
               <div className="flex items-center mt-2 space-x-4">
                 <button
                   className="text-blue-600 hover:text-blue-800"
@@ -128,8 +128,9 @@ const Section = () => {
 
                     return (
                       <li key={index}>
-                        <strong>@{comment.author}</strong>: {comment.text}
-                      </li>
+                      <strong>@{comment.author}</strong>: {comment.text}
+                    </li>
+                    
                     );
                   })}
                 </ul>
@@ -138,12 +139,13 @@ const Section = () => {
               {commentVisible[item._id] && (
                 <div className="mt-4 flex items-center space-x-2 relative">
                   <textarea
-                    className='w-full rounded-lg'
+                    className='w-full rounded-lg pl-3'
                     value={text[item._id] || ""}
                     onChange={(e) =>
                       settext(prev => ({ ...prev, [item._id]: e.target.value }))
                     }
                   />
+     
                   <button
                     className="absolute top-1 right-2 bg-gray-800 text-white px-4 py-2 rounded-lg"
                     onClick={() => commentHandler(item._id)}

@@ -1,20 +1,14 @@
-import mongoose from 'mongoose'
-const post=new mongoose.Schema({
 
-  nickName:{type:String},
-    baslik:{type:String, required:true},
-  
-  acikla:{type:String,required:true},
+import mongoose from 'mongoose'
+const postSchema=new mongoose.Schema({
+  kullanici:String,
+  title: String,
+  content: String,
   comments: [
     {
-      text: { type: String },
-      author: { type: String}
-    }
+      text: String,
+      author:String
+    },
   ],
-  
-   likeCount:{
-    type:Number,
-    default:0
-}
 })
-export default mongoose.model('Post',post)
+export default mongoose.model('Post',postSchema)

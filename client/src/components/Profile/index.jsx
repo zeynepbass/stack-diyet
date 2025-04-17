@@ -31,7 +31,7 @@ const ProfilePage = () => {
      
             
             
-                <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-6 pr-3">
 
                 <div className="w-24 h-24 bg-gray-200 rounded-full overflow-hidden">
                     <img src={data.selectedFile ? data.selectedFile : null} className="w-full h-full object-cover" />

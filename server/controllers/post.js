@@ -1,7 +1,6 @@
 import Post  from '../models/post.js'
 import mongoose from 'mongoose';
-
-
+import Notification from '../models/bildirim.js'
 const getPosts=async (req,res)=>{
 
     try {
@@ -13,31 +12,29 @@ const getPosts=async (req,res)=>{
     }
 }
 
-const CreatePost=async (req,res)=>{
-
-    const post=req.body;
-
-    const newPost=new Post({...post});
-    //postun tüm alanlarını getirdik creator kullanıcının ıd tutucak saatı yerel saatı kullandık toıso kısmı saatı aktardık bu creator kısmı burda ekelndı o yuzden form kısmından sildik
-
+const CreatePost = async (req, res) => {
+    const post = req.body;
+  
+    
+    const newPost = new Post({
+      ...post,
+      kullanici: post.kullanici 
+    });
+  
     try {
-
-        await newPost.save(); //veritabanına kaydeder
-        res.status(201).json(newPost)
-        
+      await newPost.save();
+      res.status(201).json(newPost);
     } catch (error) {
-        res.status(409).json({message:error.message})
+      res.status(409).json({ message: error.message });
     }
-	
-	//HTTP STATUS CODE ları inceleyelim
-	//https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses
-}
+  };
+  
 
 const Delete=async (req,res)=>{
     const {id:_id}=req.params;
 
 
-    if(!mongoose.Types.ObjectId.isValid(_id))  res.status(404).send('Post silindi') //mongodb object ıd olup olmadıgını kontrol ettık
+    if(!mongoose.Types.ObjectId.isValid(_id))  res.status(404).send('Post silindi')
   await Post.findByIdAndRemove(_id);
   res.status(200).json({message:'post silindi'})
   
@@ -70,19 +67,35 @@ const duzenle = async (req, res) => {
       res.status(500).json({ message: "Sunucu hatası", error });
     }
   };
-  
   const commentPost = async (req, res) => {
     const { id } = req.params;
     const { text, author } = req.body;
   
-    const post = await Post.findById(id);
+    try {
+      const post = await Post.findById(id);
+      if (!post) return res.status(404).json({ message: "Post bulunamadı" });
   
-    post.comments.push({ text: text, author });
+      post.comments.push({ text, author });
+      const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
   
-    const updatedPost = await Post.findByIdAndUpdate(id, post, { new: true });
+      const notification = new Notification({
+        type: 'comment',
+        postId: post._id,
+        sender: author,
+        receiver: post.kullanici, 
+        message: `${author} postuna bir yorum yaptı. ${text}`
+      });
+      await notification.save();
+
+      res.status(200).json({ message: 'Yorum ve bildirim eklendi.', updatedPost });
   
-    res.json(updatedPost);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   };
+  
+
+  
 const likePost = async (req, res) => {
     const { id } = req.params;  
     if (!mongoose.Types.ObjectId.isValid(id)) {

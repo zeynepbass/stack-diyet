@@ -1,6 +1,6 @@
 {
   "name": "stackowerflow",
-  "proxy": "https://stack-diyet.onrender.com",
+  "proxy": "https://stack-diyet.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "axios": "^1.8.4",
     "dotenv": "^16.4.7",
     "emailjs-com": "^3.2.0",
+    "lucide-react": "^0.488.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.4.1",

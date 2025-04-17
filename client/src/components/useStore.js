@@ -16,7 +16,7 @@ const useStore = create((set) => ({
     
           set((state) => {
             const filteredData = fetchedData.filter((item) =>
-              item.baslik.toLowerCase().includes(state.search.toLowerCase())
+              item.title?.toLowerCase().includes(state.search.toLowerCase())
             ).reverse();
     
             return {
@@ -32,7 +32,7 @@ const useStore = create((set) => ({
         set((state) => {
           const filteredData = state.data
             .filter((item) =>
-              item.baslik.toLowerCase().includes(newSearch.toLowerCase())
+              item.title.toLowerCase().includes(newSearch.toLowerCase())
             )
             .reverse();
     

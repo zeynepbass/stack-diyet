@@ -2,7 +2,7 @@ import { Disclosure, DisclosureButton, Menu, MenuButton, MenuItem, MenuItems } f
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import {Link, useNavigate } from 'react-router-dom';
 import useStore from './useStore';
-
+import Bell from "../components/Bell"
 const Navbar = () => {
   const { search, setSearch } = useStore()
   const navigate=useNavigate()
@@ -71,7 +71,11 @@ const Navbar = () => {
 
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {user ?
+            <>
+
+            <Bell/>
               <Menu as="div" className="relative ml-3">
+             
                 <div>
                   <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
                     <span className="absolute -inset-1.5" />
@@ -98,7 +102,7 @@ const Navbar = () => {
                   </MenuItem>
 
                 </MenuItems>
-              </Menu> :
+              </Menu>             </>:
               <button className="rounded-full" onClick={() => navigate("/giris-yap")}>Giriş Yap</button>
             }
           </div>
