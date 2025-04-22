@@ -2,7 +2,7 @@ import { Disclosure, DisclosureButton, Menu, MenuButton, MenuItem, MenuItems } f
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, useNavigate } from 'react-router-dom';
 import useStore from './useStore';
-import Bell from "./bell";
+import Bell from "./Bell";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAppleAlt } from "@fortawesome/free-solid-svg-icons";
 
