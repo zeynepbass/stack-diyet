@@ -1,5 +1,6 @@
 import React from 'react'
-import Nav from "../../components/Navbar"
+import Nav from "../../components/navbar"
+
 const HeaderTop = () => {
   return (
    <Nav />

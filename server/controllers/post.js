@@ -83,7 +83,7 @@ const duzenle = async (req, res) => {
         postId: post._id,
         sender: author,
         receiver: post.kullanici, 
-        message: `${author} postuna bir yorum yaptı. ${text}`
+        message: `${author}: ${text}`
       });
       await notification.save();
 

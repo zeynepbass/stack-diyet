@@ -43,7 +43,7 @@ const LoginForm = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center text-blue-800">Şifremi Unuttum</h2>
+        <h2 className="text-2xl font-semibold text-center text-green-800">Şifremi Unuttum</h2>
 
         {/* Error Message */}
         {errorMessage && (
@@ -63,7 +63,7 @@ const LoginForm = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Email girin"
               required
             />
@@ -76,7 +76,7 @@ const LoginForm = () => {
             type="password"
             name="newPassword"
             value={formData.newPassword}
-               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Yeni parola girin"
             onChange={handleChange}
             required
@@ -91,7 +91,7 @@ const LoginForm = () => {
             type="password"
             name="confirmPassword"
             value={formData.confirmPassword}
-             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Yeni tekrar girin"
             onChange={handleChange}
             required
@@ -102,7 +102,7 @@ const LoginForm = () => {
           <div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 px-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-500focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               Kaydet
             </button>

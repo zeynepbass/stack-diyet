@@ -54,7 +54,7 @@ await fetchRegister(formData);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center text-blue-800">Kayıt Ol</h2>
+        <h2 className="text-2xl font-semibold text-center text-green-800">Kayıt Ol</h2>
 
         {/* Error Message */}
         {errorMessage && (
@@ -74,7 +74,7 @@ await fetchRegister(formData);
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="İsim girin"
               required
             />
@@ -88,7 +88,7 @@ await fetchRegister(formData);
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Soyisim girin"
               required
             />
@@ -102,7 +102,7 @@ await fetchRegister(formData);
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="E-posta adresinizi girin"
               required
             />
@@ -118,7 +118,7 @@ await fetchRegister(formData);
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Parolanızı girin"
               required
             />
@@ -132,7 +132,7 @@ await fetchRegister(formData);
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Parolanızı tekrar girin"
               required
             />
@@ -142,7 +142,7 @@ await fetchRegister(formData);
           <div>
             <button
               type="submit"
-              className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full py-2 px-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-500focus:outline-none focus:ring-2 focus:ring-green-500"
             >
               Kayıt Ol
             </button>
@@ -152,7 +152,7 @@ await fetchRegister(formData);
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Hesabınız var mı?{' '}
-            <Link to="/giris-yap" className="text-blue-600 hover:text-blue-500">
+            <Link to="/giris-yap" className="text-green-600 hover:text-green-500">
               Giriş Yap
             </Link>
           </p>

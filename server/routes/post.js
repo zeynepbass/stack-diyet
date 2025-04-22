@@ -12,7 +12,7 @@ router.put('/duzenle/:id',duzenle);
 router.post('/detay/:id',commentPost);
 router.put('/panel/like/:id', likePost);
 router.get("/api/notifications", async (req, res) => {
-  const notifications = await Notification.find().sort({ createdAt: -1 }).limit(10)
+  const notifications = await Notification.find().sort({ createdAt: -1 }).limit(30)
   res.json(notifications)
 })
 

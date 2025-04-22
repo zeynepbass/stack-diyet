@@ -2,46 +2,49 @@ import { create } from 'zustand';
 import axios from 'axios';
 
 const useStore = create((set) => ({
-    search: "", 
-    data: [], 
+    search: "",
+    data: [],
     usersData: [],
-    filteredData: [], 
+    filteredData: [],
     user: JSON.parse(localStorage.getItem("user")) || null,
     firstName: JSON.parse(localStorage.getItem("firstName")),
-   
     fetchPost: async () => {
         try {
-          const response = await axios.get('/panel');
-          const fetchedData = [...response.data].reverse();
-    
-          set((state) => {
-            const filteredData = fetchedData.filter((item) =>
-              item.title?.toLowerCase().includes(state.search.toLowerCase())
-            ).reverse();
-    
-            return {
-              data: fetchedData,
-              filteredData: filteredData,
-            };
-          });
+            const response = await axios.get('/panel');
+
+
+            const fetchedData = response.data ? response.data.reverse() : [];
+
+            set((state) => {
+                const dataFilter = fetchedData.filter((item) => {
+                    const title = item.title?.toLowerCase() || '';
+                    return title.includes(state.search.toLowerCase());
+                });
+
+                return {
+                    data: fetchedData,
+                    filteredData: dataFilter,
+                };
+            });
         } catch (error) {
-          console.error('Error fetching data:', error);
+            console.error('Error fetching data:', error);
         }
-      },
+    },
+
+
     setSearch: (newSearch) => {
         set((state) => {
-          const filteredData = state.data
-            .filter((item) =>
-              item.title.toLowerCase().includes(newSearch.toLowerCase())
-            )
-            .reverse();
-    
-          return {
-            search: newSearch,
-            filteredData: filteredData,
-          };
+            const filteredData = state.data.filter((item) =>
+                item.title.toLowerCase().includes(newSearch.toLowerCase())
+            );
+
+            return {
+                search: newSearch,
+                filteredData: filteredData,
+            };
         });
-      },
+    },
+
 
     fetchUsers: async () => {
         try {
@@ -67,49 +70,42 @@ const useStore = create((set) => ({
             console.error('Error fetching data:', error);
         }
     },
+
     fetchComment: async (formData) => {
         try {
 
-            const user = JSON.parse(localStorage.getItem('user')) || null;
-
-            
-            if (!user) {
-                console.error('No user found');
-                return;
-            }
 
 
-         
-                const data = JSON.parse(localStorage.getItem("user"))
+            const data = JSON.parse(localStorage.getItem("user"))
 
 
-              
-                const nickName = data?.result?.firstName
 
-               
-                const newPost = {
-                    ...formData,    
-                    nickName: nickName, 
-                };
+            const nickName = data?.result?.firstName
 
 
-                axios.post('/panel', newPost)
-                    .then((response) => {
-                       
-                        set((state) => {
-                          
-                            const updatedFilteredData = state?.data ? [...state.data, response.data] : [response.data];
+            const newPost = {
+                ...formData,
+                nickName: nickName,
+            };
 
-                    
-                            return {
-                                filteredData: updatedFilteredData,
-                            };
-                        });
-                    })
-                    .catch((error) => {
-                        console.error('Error submitting comment:', error);
+
+            axios.post('/panel', newPost)
+                .then((response) => {
+
+                    set((state) => {
+
+                        const updatedFilteredData = state?.filteredData ? [...state.filteredData, response.data] : [response.data];
+
+
+                        return {
+                            filteredData: updatedFilteredData,
+                        };
                     });
-     
+                })
+                .catch((error) => {
+                    console.error('Error submitting comment:', error);
+                });
+
 
         } catch (error) {
             console.error('Error submitting comment:', error);
@@ -119,14 +115,14 @@ const useStore = create((set) => ({
     fetchRegister: async (formData) => {
 
         try {
-            const response = await axios.post("/uye-ol", formData); 
+            const response = await axios.post("/uye-ol", formData);
 
 
             if (response) {
 
                 localStorage.setItem("firstName", JSON.stringify(response.data.result.firstName));
                 localStorage.setItem("userRegister", JSON.stringify(response.data.result));
-                
+
             } else {
                 console.error("Response data is missing");
             }
@@ -137,7 +133,8 @@ const useStore = create((set) => ({
     fetchLogin: async (formData) => {
 
         try {
-            const response = await axios.post("/signin", formData); 
+            const response = await axios.post("/signin", formData);
+            console.log(response)
             if (response) {
 
                 localStorage.setItem("user", JSON.stringify(response.data));
@@ -151,27 +148,27 @@ const useStore = create((set) => ({
     },
 
 
-fetchSifre : async (formData) => {
-  try {
+    fetchSifre: async (formData) => {
+        try {
 
 
 
-    const formDataWithEmail = { ...formData };
-    console.log("Form Data:", formDataWithEmail);
-    const response = await axios.put("/sifre", formDataWithEmail);
+            const formDataWithEmail = { ...formData };
+            console.log("Form Data:", formDataWithEmail);
+            const response = await axios.put("/sifre", formDataWithEmail);
 
-    if (response.status === 200) {
-   
-      console.log("Şifre güncelleme başarılı.");
-    } else {
-      // Hata durumunda, hata mesajı göster
-      console.log("Şifre güncellenirken bir hata oluştu:", response.data.message);
+            if (response.status === 200) {
+
+                console.log("Şifre güncelleme başarılı.");
+            } else {
+                // Hata durumunda, hata mesajı göster
+                console.log("Şifre güncellenirken bir hata oluştu:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Hata oluştu:", error);
+            console.log("Bir hata oluştu. Lütfen tekrar deneyin.");
+        }
     }
-  } catch (error) {
-    console.error("Hata oluştu:", error);
-    console.log("Bir hata oluştu. Lütfen tekrar deneyin.");
-  }
-}
 
 
 

@@ -2,12 +2,13 @@
 
 import { Routes, Route } from "react-router-dom";
 import Section from "./components/section"
-import Hakkinda from "./pages/hakkinda"
+import Hakkinda from "./pages/home"
 import Layouts from "./pages/layouts/layout"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import SifremiUnuttum from "./pages/sifremiUnuttum"
 import ProfilePage from "./pages/layouts/ProfilLayouts"
+
 function App() {
 
   return (

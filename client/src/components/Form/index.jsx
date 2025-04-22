@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import useStore from "../useStore";
 import { Navigate } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 const Index = () => {
   const { fetchComment } = useStore();
 
@@ -52,26 +54,31 @@ const Index = () => {
           name="title"
           value={formData.title}
           onChange={handleChange}
-          className="h-10 block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+          className="h-10 block w-full p-4  text-sm text-gray-900 border outline-none  border-gray-300 rounded-lg bg-gray-50 focus:ring-green-500 focus:border-green-500"
           placeholder="Başlık yaz..."
           required
         />
-
-        <textarea
+<div className='flex'>
+<textarea
           name="content"
           value={formData.content}
           onChange={handleChange}
-          className="h-50 block w-full p-1 mt-1 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+          className="h-20 relative w-full p-4 mt-2 text-sm text-gray-900 border outline-none border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm transition duration-300 ease-in-out"
+ 
+       
           placeholder="Açıklama yaz..."
           required
         ></textarea>
 
-        <button
-          type="submit"
-          className="float-right mt-1 w-auto p-2 bg-blue-700 text-white rounded-lg hover:bg-blue-100 focus:ring-2 focus:ring-blue-300"
-        >
-          Gönder
-        </button>
+<button
+  type="submit"
+  className="h-20 mt-2 absolute right-0 pl-3 pr-4 bg-green-700 text-white rounded-tr-lg rounded-br-lg hover:bg-green-100 focus:ring-2 focus:ring-blue-300"
+>
+<FontAwesomeIcon icon={faArrowRight} /> 
+</button>
+
+</div>
+ 
 
       </div>
     </form>
