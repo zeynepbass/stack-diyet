@@ -11,13 +11,16 @@ const ProfilePage = () => {
   const [editBaslik, setEditBaslik] = useState("");
   const [editAcikla, setEditAcikla] = useState("");
   const handleSave = async (postId) => {
+    console.log(postId)
+    console.log(editBaslik)
+    console.log(editAcikla)
     try {
-      await axios.put(`/duzenle/${postId}`, {
-        baslik: editBaslik,
-        acikla: editAcikla,
+      await axios.put(`/updated/${postId}`, {
+        title: editBaslik,
+        content: editAcikla,
       });
       setEditingId(null);
-      fetchPost(); // güncel veriyi çek
+      fetchPost(); 
     } catch (err) {
       console.error("Düzenleme hatası:", err);
     }
@@ -64,7 +67,7 @@ const ProfilePage = () => {
   useEffect(() => {
     if (filteredData.length > 0 && Object.keys(data).length > 0 && data.firstName) {
       const titles = filteredData.filter(
-        (item) => item.nickName === data.firstName
+        (item) => item.nickName || item.kullanici === data.firstName
       );
       setFilteredTitles(titles);
 
@@ -99,7 +102,7 @@ const ProfilePage = () => {
           <div className="flex-1 sm:mr-6">
             <h2 className="text-xl font-semibold text-gray-900">Son Gönderi</h2>
             <p className="text-gray-700 mt-2">
-              {Likes ? Likes.acikla : "Henüz gönderi bulunmuyor."}
+              {Likes ? Likes.content : "Henüz gönderi bulunmuyor."}
             </p>
           </div>
           <div className="mt-6 sm:mt-0 sm:flex-shrink-0">
@@ -175,8 +178,8 @@ const ProfilePage = () => {
                   </>
                 ) : (
                   <>
-                    <h6 className="mt-4 text-xl text-gray-800">{item.baslik}</h6>
-                    <p className="mt-4 text-gray-700">{item.acikla}</p>
+                    <h6 className="mt-4 text-xl text-gray-800">{item.title}</h6>
+                    <p className="mt-4 text-gray-700">{item.content}</p>
                   </>
                 )}
 
@@ -195,7 +198,7 @@ const ProfilePage = () => {
                   </span>
                 </div>
 
-                {userEmail?.result?.firstName === item.nickName && (
+                {userEmail?.result?.firstName === item.kullanici && (
                   <div className="absolute top-4 right-4 flex items-center space-x-2">
                     <button
                       onClick={() => handleDelete(item._id)}
@@ -208,8 +211,8 @@ const ProfilePage = () => {
                     <button
                       onClick={() => {
                         setEditingId(item._id);
-                        setEditBaslik(item.baslik);
-                        setEditAcikla(item.acikla);
+                        setEditBaslik(item.title);
+                        setEditAcikla(item.content);
                       }}
                       className="text-gray-600 hover:text-gray-800 transition"
                       title="Düzenle"

@@ -1,5 +1,5 @@
 import express from "express"
-import { getPosts,CreatePost,Delete,Detay,duzenle, commentPost,likePost} from "../controllers/post.js"
+import { getPosts,CreatePost,Delete,Detay,duzenle, commentPost,likePost,updated} from "../controllers/post.js"
 import Notification from "../models/bildirim.js"
 
 const router=express.Router()
@@ -9,6 +9,7 @@ router.post('/panel',CreatePost);
 router.delete('/panel/:id',Delete);
 router.get('/detay/:id',Detay);
 router.put('/duzenle/:id',duzenle);
+router.put('/updated/:id',updated);
 router.post('/detay/:id',commentPost);
 router.put('/panel/like/:id', likePost);
 router.get("/api/notifications", async (req, res) => {

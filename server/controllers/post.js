@@ -50,6 +50,28 @@ const Delete=async (req,res)=>{
         res.status(404).json({message:error.message})
     }
 }
+const updated = async (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  try {
+    const updated = await Post.findByIdAndUpdate(
+      id, 
+      { title, content },
+      { new: true }
+    );
+    
+
+    if (!updated) {
+      return res.status(404).json({ message: "Gönderi bulunamadı" });
+    }
+
+    res.status(200).json(updated);
+  } catch (error) {
+    res.status(500).json({ message: "Sunucu hatası", error });
+  }
+};
+
 const duzenle = async (req, res) => {
     const { id } = req.params;
     const { selectedFile } = req.body;
@@ -122,6 +144,7 @@ export {
     Detay,
     duzenle,
     commentPost,
-    likePost
+    likePost,
+    updated
 
 }

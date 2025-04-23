@@ -1,7 +1,7 @@
 
 
 import { Routes, Route } from "react-router-dom";
-import Section from "./components/section"
+import Section from "./components/Section"
 import Hakkinda from "./pages/home"
 import Layouts from "./pages/layouts/layout"
 import Login from "./pages/login"
