@@ -1,13 +1,13 @@
 
 
-import { Routes, Route } from "react-router-dom";
-import Section from "./components/Section"
+import { Routes, Route } from "react-router-dom"
 import Hakkinda from "./pages/home"
 import Layouts from "./pages/layouts/layout"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import SifremiUnuttum from "./pages/sifremiUnuttum"
 import ProfilePage from "./pages/layouts/ProfilLayouts"
+import Section from "./components/Section"
 
 function App() {
 
