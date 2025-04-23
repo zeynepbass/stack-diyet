@@ -7,7 +7,7 @@ import Login from "./pages/login"
 import Register from "./pages/register"
 import SifremiUnuttum from "./pages/sifremiUnuttum"
 import ProfilePage from "./pages/layouts/ProfilLayouts"
-import Section from "./components/Section.jsx"
+import Section from "./components/section.jsx"
 
 function App() {
 
