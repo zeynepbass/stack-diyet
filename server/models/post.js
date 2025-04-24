@@ -1,5 +1,5 @@
 
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 const postSchema=new mongoose.Schema({
   kullanici:String,
   title: String,
