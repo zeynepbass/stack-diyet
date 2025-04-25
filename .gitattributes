@@ -1,8 +1,0 @@
-# Tüm metin dosyaları için LF normalize
-* text=auto
-
-# .env dosyaları text dosyasıdır
-*.env text
-
-# node_modules genelde versiyonlanmaz ama varsa binary olarak işlenebilir
-node_modules/** binary
