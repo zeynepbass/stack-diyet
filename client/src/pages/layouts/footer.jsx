@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useStore from "../../components/useStore";
 import Dialog from "../../components/Dialog";
 import { Navigate } from 'react-router-dom';
-
+import Calculator from "./kitleCalculator"
 const Footer = () => {
     const { filteredData } = useStore();
     const [open, setOpen] = useState(false);
@@ -53,6 +53,8 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
+   <Calculator/>
+
         </div>
     );
 };
