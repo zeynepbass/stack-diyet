@@ -1,8 +1,8 @@
-# Auto detect text files and perform LF normalization
+# Tüm metin dosyaları için LF normalize
 * text=auto
-# .env files
-**/.env
-**/node_modules
-.env
-client/.env
-server/.env
+
+# .env dosyaları text dosyasıdır
+*.env text
+
+# node_modules genelde versiyonlanmaz ama varsa binary olarak işlenebilir
+node_modules/** binary
