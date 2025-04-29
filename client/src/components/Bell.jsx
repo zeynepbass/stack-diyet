@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { Bell } from "lucide-react";
 
 const NotificationBell = () => {
+  const basePath = process.env.REACT_APP_BASE_PATH;
   const [open, setOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const boxRef = useRef(null);
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    fetch("/api/notifications")
+    fetch(`${basePath}/api/notifications`)
       .then((res) => res.json())
       .then((data) => setNotifications(data))
       .catch((err) => console.error("Bildirimler alınamadı:", err));

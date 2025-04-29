@@ -5,6 +5,7 @@ import axios from "axios";
 
 const ProfilePage = () => {
     const { filteredData } = useStore();
+    const basePath = process.env.REACT_APP_BASE_PATH;
     const [open, setOpen] = useState(false);
     const [data, setData] = useState("");
     const user = JSON.parse(localStorage.getItem("user"));
@@ -18,7 +19,7 @@ const ProfilePage = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(`/detay/${user?.result?._id}`);
+            const response = await axios.get(`${basePath}/detay/${user?.result?._id}`);
             setData(response.data);
         } catch (error) {
             console.error(error);

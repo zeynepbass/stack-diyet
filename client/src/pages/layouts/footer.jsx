@@ -4,12 +4,18 @@ import Dialog from "../../components/Dialog";
 import { Navigate } from 'react-router-dom';
 import Calculator from "./kitleCalculator"
 const Footer = () => {
+    const dietEmojis = ["🥗", "🥬", "🥒", "🥑", "🍅", "💪", "🍋", "🌽", "🍓", "🥦"];
+
+    const getRandomEmoji = () => {
+        return dietEmojis[Math.floor(Math.random() * dietEmojis.length)];
+    };
+
     const { filteredData } = useStore();
     const [open, setOpen] = useState(false);
     const top5Posts = filteredData
         .filter((item) => item.likeCount)
         .sort((a, b) => b.likeCount - a.likeCount)
-        .slice(0, 4);
+        .slice(0, 9);
     const user = JSON.parse(localStorage.getItem("user"));
 
     const handleClickUsers = () => {
@@ -20,17 +26,21 @@ const Footer = () => {
         }
     };
 
+
     return (
+
         <div className="grid grid-cols-1 gap-6 mt-8">
 
             <div className=" bg-green-50 rounded-xl border-2 border-green-100 p-4">
-                <h4 className="font-semibold text-slate-700 mb-4">Popüler Gönderiler</h4>
+                <h4 className="font-semibold text-slate-700 ">Popüler Gönderiler</h4>
+                <hr/>
+
                 {top5Posts && top5Posts.map((post, index) => (
-                    <div key={index} className="mb-2">
+                    <div key={index} className="m-2">
                         <strong className="block text-sm font-semibold text-gray-800">
-                            {post.title ? post.title.slice(0, 51) + "..." : "Başlık Yok"}
+                            {getRandomEmoji()}   {post.title ? post.title.slice(0, 51) + "..." : "Başlık Yok"}
                         </strong>
-                        <span className="text-xs text-gray-400">{post.likeCount} Beğeni</span>
+
                     </div>
                 ))}
             </div>
@@ -53,7 +63,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-   <Calculator/>
+            <Calculator />
 
         </div>
     );

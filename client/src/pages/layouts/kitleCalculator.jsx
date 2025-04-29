@@ -80,7 +80,7 @@ const YourComponent = () => {
             <div className="flex items-center gap-4">
                 <div className="flex flex-col">
                     {isLoading ? (
-                        <span className="animate-spin text-lg">🔄</span>
+                        <span className="animate-spin text-lg">⟳</span>
                     ) : (
                         <button
                             onClick={handleClick}

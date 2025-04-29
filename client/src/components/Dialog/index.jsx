@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 
 const Index = ({ open, setOpen, data, setData }) => {
+    const basePath = process.env.REACT_APP_BASE_PATH;
     const [base64Image, setBase64Image] = useState("");
     const { usersData, fetchUsers } = useStore();
     const [searchQuery, setSearchQuery] = useState("");
@@ -32,7 +33,7 @@ const Index = ({ open, setOpen, data, setData }) => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put(`/duzenle/${user.result._id}`, {
+            const response = await axios.put(`${basePath}/duzenle/${user.result._id}`, {
                 selectedFile: base64Image,
             });
 

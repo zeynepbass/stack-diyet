@@ -4,18 +4,20 @@ import axios from "axios";
 import useStore from "../../useStore";
 
 const ProfilePage = () => {
+  const basePath = process.env.REACT_APP_BASE_PATH;
   const { id } = useParams();
   const userEmail = JSON.parse(localStorage.getItem("user"));
   const { filteredData, fetchPost } = useStore();
   const [editingId, setEditingId] = useState(null);
   const [editBaslik, setEditBaslik] = useState("");
   const [editAcikla, setEditAcikla] = useState("");
+
   const handleSave = async (postId) => {
     console.log(postId)
     console.log(editBaslik)
     console.log(editAcikla)
     try {
-      await axios.put(`/updated/${postId}`, {
+      await axios.put(`${basePath}/updated/${postId}`, {
         title: editBaslik,
         content: editAcikla,
       });
@@ -25,7 +27,6 @@ const ProfilePage = () => {
       console.error("Düzenleme hatası:", err);
     }
   };
-
   const [data, setData] = useState({});
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [filteredTitles, setFilteredTitles] = useState([]);
@@ -33,18 +34,17 @@ const ProfilePage = () => {
   const handleDelete = async (postId) => {
     if (window.confirm("Bu gönderiyi silmek istediğinize emin misiniz?")) {
       try {
-        await axios.delete(`/panel/${postId}`);
+        await axios.delete(`${basePath}/panel/${postId}`);
         fetchPost();
       } catch (err) {
         console.error("Silme hatası:", err);
       }
     }
   };
-
   const fetchData = async (id) => {
     try {
 
-      const response = await axios.get(`/detay/${id}`);
+      const response = await axios.get(`${basePath}/detay/${id}`);
       setData(response.data);
 
     } catch (error) {

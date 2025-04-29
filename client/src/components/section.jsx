@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 const Section = () => {
+  const basePath = process.env.REACT_APP_BASE_PATH;
   const { filteredData, fetchPost, fetchLike } = useStore();
   const user = JSON.parse(localStorage.getItem("user"));
   const [open, setOpen] = useState(false);
@@ -29,7 +30,7 @@ const Section = () => {
         text: currentText,
         author: user?.result?.firstName
       };
-      await axios.post(`/detay/${postId}`, newComment);
+      await axios.post(`${basePath}/detay/${postId}`, newComment);
       await fetchPost();
       setText(prev => ({ ...prev, [postId]: "" }));
     } catch (error) {
@@ -49,7 +50,7 @@ const Section = () => {
     const incrementedLikeCount = currentLikeCount + 1;
     fetchLike(postId, incrementedLikeCount);
   };
-
+  let dizi = []
   return (
     <div className='pt-4 px-6'>
 
@@ -83,19 +84,39 @@ const Section = () => {
       <div className="grid gap-8 pt-4 mt-10">
         {filteredData && filteredData.map((item, index) => (
           <div key={item._id || index} className="bg-white p-6 rounded-xl shadow-md transition hover:shadow-lg">
-  <div className="flex justify-between w-full">
-  <h4 className="text-green-700 font-semibold text-md mb-1">
-    {item.kullanici || "Anonim Kullanıcı"}
-  </h4>
-  <h6 className="text-green-900 ">
-    {item.updatedAt ? new Date(item.updatedAt).toLocaleString("tr-TR")  : null}
-  </h6>
-</div>
+            <div className="flex justify-between w-full">
+              <h4 className="text-green-700 font-semibold text-md mb-1">
+                {item.kullanici || "Anonim Kullanıcı"}
+              </h4>
+              <h6 className="text-green-900 ">
+              <p className="text-green-900 text-xs">
+  {item.updatedAt 
+    ? `${new Date(item.updatedAt).toLocaleDateString("tr-TR")} ${new Date(item.updatedAt).getHours().toString().padStart(2, '0')}:${new Date(item.updatedAt).getMinutes().toString().padStart(2, '0')}`
+    : null}
+</p>
+
+              </h6>
+            </div>
 
 
             <p className="text-lg font-bold text-gray-800">{item.title}</p>
+
             <p className="text-sm text-gray-600 mt-2 font-bold">
-              {item.content}
+
+              <p className="text-sm text-gray-600 mt-2 font-bold">
+                {item.content.includes("#")
+                  ? item.content.split("#")[0].trim()
+                  : item.content}
+              </p>
+
+
+            </p>
+            <p className="text-sm text-gray-600 mt-2 font-bold">
+
+              {item.content.includes("#")
+                ? item.content.match(/#[\wğüşöçıİĞÜŞÖÇ]+/g)?.join(", ")
+                : item.content}
+
             </p>
 
 
@@ -103,7 +124,7 @@ const Section = () => {
 
 
 
-            <div className="flex items-center justify-start mt-4 gap-4 text-sm text-gray-500">
+            <div className="flex items-center justify-start mt-4 gap-4 text-sm text-gray-500 ">
               <button
                 onClick={() => handleClick(item._id, item.likeCount)}
                 className="flex items-center gap-1 text-red-500 hover:text-red-600"
@@ -119,11 +140,20 @@ const Section = () => {
               </button>
             </div>
 
+            <ul className="mt-3 space-y-2 pl-2">
+                  {item?.comments?.map((comment, idx) => (
+                    <li key={idx} className="flex justify-between items-start text-sm text-gray-700">
+                      <span>
+                        <strong>@{comment.author.toLowerCase()}:</strong> {comment.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
             {commentVisible[item._id] && (
-              <div className="mt-4">
+              <div className="mt-4 pl-2">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                   <textarea
-                    className="w-full rounded-lg p-2 border border-gray-300"
+                    className="w-full rounded-lg p-2 border border-gray-300 outline-none"
                     rows="2"
                     value={text[item._id] || ""}
                     onChange={(e) =>
@@ -139,15 +169,6 @@ const Section = () => {
                   </button>
                 </div>
 
-                <ul className="mt-3 space-y-2">
-                  {item?.comments?.map((comment, idx) => (
-                    <li key={idx} className="flex justify-between items-start text-sm text-gray-700">
-                      <span>
-                        <strong>@{comment.author}:</strong> {comment.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             )}
           </div>
