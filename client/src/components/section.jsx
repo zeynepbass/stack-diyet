@@ -83,11 +83,25 @@ const Section = () => {
       <div className="grid gap-8 pt-4 mt-10">
         {filteredData && filteredData.map((item, index) => (
           <div key={item._id || index} className="bg-white p-6 rounded-xl shadow-md transition hover:shadow-lg">
-            <h4 className="text-green-700 font-semibold text-md mb-1">
-              {item.kullanici || "Anonim Kullanıcı"}
-            </h4>
+  <div className="flex justify-between w-full">
+  <h4 className="text-green-700 font-semibold text-md mb-1">
+    {item.kullanici || "Anonim Kullanıcı"}
+  </h4>
+  <h6 className="text-green-900 ">
+    {item.updatedAt ? new Date(item.updatedAt).toLocaleString("tr-TR")  : null}
+  </h6>
+</div>
+
+
             <p className="text-lg font-bold text-gray-800">{item.title}</p>
-            <p className="text-sm text-gray-600 mt-2">{item.content}</p>
+            <p className="text-sm text-gray-600 mt-2 font-bold">
+              {item.content}
+            </p>
+
+
+
+
+
 
             <div className="flex items-center justify-start mt-4 gap-4 text-sm text-gray-500">
               <button

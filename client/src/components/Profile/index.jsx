@@ -8,6 +8,7 @@ const ProfilePage = () => {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState("");
     const user = JSON.parse(localStorage.getItem("user"));
+    const userProfile = JSON.parse(localStorage.getItem("userProfile"));
     const filteredTitles = filteredData.filter(item => item.nickName || item.kullanici === user?.result?.firstName);
     const lastTitles = filteredTitles.reverse();
 
@@ -34,7 +35,9 @@ const ProfilePage = () => {
 
             <div className="flex items-center space-x-6 pr-3">
                 <div className="w-24 h-24 bg-gray-200 rounded-full overflow-hidden">
-                    <img src={data.selectedFile || null} className="w-full h-full object-cover" alt="" />
+                    <img src={userProfile?.selectedFile ?? data?.selectedFile}
+
+ className="w-full h-full object-cover" alt="" />
                 </div>
                 <div>
                     <h1 className="text-2xl font-semibold text-gray-800">@{data.firstName}</h1>
@@ -58,11 +61,9 @@ const ProfilePage = () => {
                                 {lastTitles.map((item, index) => (
                                     <li key={index} className="bg-white p-1 rounded-lg mb-1">
                                         <div className="flex items-center space-x-4">
-                                            <div className="w-8 h-2 text-white rounded-full flex items-center justify-center">
-                                                <span className="text-xl">📌</span>
-                                            </div>
+                                           
                                             <div>
-                                                <h2 className="text-gray-900 text-xl font-semibold">{item.title}</h2>
+                                                <h2 className="text-gray-900 text-xl font-semibold ">📌 &nbsp;{item.title}</h2>
                                                 <p className="text-gray-600 mt-2">{item.content}</p>
                                             </div>
                                         </div>
