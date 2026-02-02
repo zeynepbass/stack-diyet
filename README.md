@@ -1,21 +1,52 @@
-🚀 Yeni Projem Yayında: Diyet ve Sağlıklı Yaşam Platformu
-Son dönemde üzerinde büyük bir heyecanla çalıştığım diyet ve sağlıklı yaşam temalı web uygulamamı tamamladım! 🎯
-Bu projede kullanıcılar:
- ✅ Kayıt olabilir, giriş yapabilir, şifrelerini sıfırlayabilir,
- ✅ Gönderi paylaşabilir, beğenebilir ve yorum yapabilir,
- ✅ En çok beğeni alan gönderileri görebilir,
- ✅ Diğer kullanıcıların profillerine ulaşabilir,
- ✅ Soru soran kullanıcıları ve tüm kullanıcıları listeleyebilir,
- ✅ Kullanıcı araması yaparak profillere gidebilir. Son gönderisini görebilir,
- ✅ Paylaşılan gönderilerde arama yapabilir,
- ✅ Görsel (profil/gönderi) güncellemesi yapabilir,
- ✅ Yorum yapıldığında bildirim alabilir!
- ✅ Profilime git sekmesinden kendi gönderisini düzenleyebilir silebilir!
-🛠️ Kullanılan Teknolojiler:
-Frontend: React.js, Tailwind CSS, FontAwesome (iconlar için)
-Backend: Node.js
-State Management: Zustand
-Email Gönderimi: React EmailJS Paketi
-Veri Yönetimi: MongoDB & Express.js
-Bu proje sayesinde hem kullanıcı deneyimini hem de teknik altyapıyı derinlemesine ele alma fırsatım oldu. Özellikle dinamik kullanıcı profilleri, interaktif gönderi sistemi ve gerçek zamanlı etkileşimler gibi özellikler üzerinde çalışmak oldukça öğreticiydi.
-🧠 Her adımı öğrenerek, deneyimleyerek gerçekleştirdim.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=#4E244D&height=120&animation=fadeIn&fontAlignY=35" />
+
+
+# 🚀 Yeni Projem: Diyet ve Sağlıklı Yaşam Platformu
+
+Son dönemde büyük bir heyecanla üzerinde çalıştığım diyet ve sağlıklı yaşam temalı web uygulamamı tamamladım! 🎯  
+
+Bu projede kullanıcılar çeşitli etkileşimlerde bulunabilir ve kendi profillerini yönetebilir.
+
+---
+
+## 🔍 Proje Özellikleri
+
+### ✅ Kullanıcı Girişi
+- Kayıt olabilir ve giriş yapabilir.  
+- Şifre sıfırlama işlemi yapılabilir.
+
+### ✅ Gönderi Paylaşımı & Etkileşim
+- Gönderi paylaşabilir, beğenebilir ve yorum yapabilir.  
+- En çok beğeni alan gönderileri görebilir.  
+- Paylaşılan gönderilerde arama yapılabilir.
+
+### ✅ Profil ve Kullanıcı Yönetimi
+- Diğer kullanıcıların profillerine ulaşabilir.  
+- Son gönderilerini görebilir.  
+- Görsel (profil/gönderi) güncellemesi yapabilir.  
+- Kendi gönderilerini düzenleyebilir veya silebilir.  
+- Profilime git sekmesinden kendi gönderilerini yönetebilir.  
+
+### ✅ Arama & Bildirimler
+- Kullanıcı araması yapabilir ve profillere gidebilir.  
+- Yorum yapıldığında bildirim alabilir.  
+- Soru soran kullanıcıları ve tüm kullanıcıları listeleyebilir.
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+**Frontend:** React.js, Tailwind CSS, FontAwesome (ikonlar için)  
+**Backend:** Node.js  
+**State Management:** Zustand  
+**Email Gönderimi:** React EmailJS paketi  
+**Veri Yönetimi:** MongoDB & Express.js  
+
+---
+
+## 💡 Proje Hedefleri
+- Kullanıcı deneyimini geliştirmek  
+- Dinamik kullanıcı profilleri oluşturmak  
+- Etkileşimli gönderi sistemi kurmak  
+- Gerçek zamanlı bildirim ve etkileşimleri uygulamak  
+- Teknik altyapıyı güçlendirmek ve full-stack yetkinliği artırmak
