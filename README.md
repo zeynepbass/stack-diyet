@@ -1,6 +1,4 @@
 
-# 🚀 Yeni Projem: Diyet ve Sağlıklı Yaşam Platformu
-
 Son dönemde büyük bir heyecanla üzerinde çalıştığım diyet ve sağlıklı 
 yaşam temalı web uygulamamı tamamladım!  
 
